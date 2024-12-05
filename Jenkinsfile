@@ -17,8 +17,6 @@ pipeline {
         }
         stage('Build') {
             steps {
-                // Set a custom cache directory
-                sh 'npm config set cache ./npm-cache --global'
                 sh 'npm install || true && echo "npm install failed"'
             }
         }
