@@ -18,6 +18,7 @@ pipeline {
 
                     // Run npm install inside the Docker container
                     nodeImage.inside {
+                        sh 'export NPM_CONFIG_CACHE=/var/lib/jenkins/.npm'
                         sh 'npm install'
                     }
                 }
