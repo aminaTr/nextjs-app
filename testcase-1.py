@@ -15,8 +15,8 @@ def test_comment_success():
     submit_button = driver.find_element(By.XPATH, "//button[contains(text(), 'Log in')]")
     
     # Replace with valid credentials
-    email_input.send_keys("test@example.com")
-    password_input.send_keys("password")
+    email_input.send_keys("amina.tahir.pk@gmail.com")
+    password_input.send_keys("Amina123")
     submit_button.click()
     
     # Wait for redirection to feed page
