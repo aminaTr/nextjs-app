@@ -1,38 +1,56 @@
 pipeline {
     agent any 
+
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                // Checkout your code from the Git repository
+                git 'https://github.com/aminaTr/nextjs-app.git'
             }
         }
-        stage('Environment Check') {
-            steps {
-                sh 'node --version'
-                sh 'npm --version'
-            }
-        }
+
         stage('Build') {
             steps {
-                sh 'npm config set cache ${WORKSPACE}/.npm-cache --global'
-                sh 'npm install'
-                sh 'npm run build'
+                script {
+                    // Pull the Node.js image
+                    def nodeImage = docker.image('node:20') // Specify your Node.js version here
+                    nodeImage.pull() // Pull the image if not already available
+
+                    // Run npm install inside the Docker container
+                    nodeImage.inside {
+                        sh 'npm install'
+                    }
+                }
             }
         }
+
         stage('Test') {
             steps {
-                sh 'echo test cases run'
+                script {
+                    // Run tests inside the Docker container
+                    docker.image('node:20').inside {
+                        sh 'npm test'
+                    }
+                }
             }
         }
-        stage('Package') {
+
+        stage('Build Application') {
             steps {
-                sh 'npm run package'
+                script {
+                    // Build the application inside the Docker container
+                    docker.image('node:20').inside {
+                        sh 'npm run build'
+                    }
+                }
             }
         }
     }
+
     post {
         always {
-            echo 'Pipeline is completed!!'
+            // Archive artifacts or perform cleanup
+            echo 'Pipeline completed!'
         }
     }
 }
