@@ -1,34 +1,32 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:20.17.0'
-        }
-    }
+    agent any 
     stages {
-        stage('Environment Check') {
-            steps {
-                sh 'node --version && npm --version'
-            }
-        }
         stage('Checkout') {
             steps {
                 checkout scm
             }
         }
+        stage('Environment Check') {
+            steps {
+                sh 'node --version'
+                sh 'npm --version'
+            }
+        }
         stage('Build') {
             steps {
-                
-                sh 'npm install || true && echo "npm install failed"'
+                sh 'npm config set cache ${WORKSPACE}/.npm-cache --global'
+                sh 'npm install'
+                sh 'npm run build'
             }
         }
         stage('Test') {
             steps {
-                sh 'echo "test cases run"'
+                sh 'echo test cases run'
             }
         }
         stage('Package') {
             steps {
-                sh 'npm run build'
+                sh 'npm run package'
             }
         }
     }
