@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Checkout your code from the Git repository
-                git 'https://github.com/aminaTr/nextjs-app.git'
+                git branch: 'main', url: 'https://github.com/aminaTr/nextjs-app.git'
             }
         }
 
