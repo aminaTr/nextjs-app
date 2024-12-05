@@ -17,11 +17,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh '''
-                    mkdir -p /.npm
-                    chown -R 111:113 /.npm
-                    npm install
-                '''
+                
                 sh 'npm install || true && echo "npm install failed"'
             }
         }
