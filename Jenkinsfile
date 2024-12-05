@@ -38,7 +38,7 @@ pipeline {
     }
     post {
         always {
-            echo 'Pipeline completed!!'
+            echo 'Pipeline is completed!!'
         }
     }
 }
