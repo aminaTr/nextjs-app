@@ -9,7 +9,7 @@ driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
 def test_comment_success():
     # Log in to the application
-    driver.get("http://localhost:3000/login")
+    driver.get("http://54.82.209.59:3000/login")
     email_input = driver.find_element(By.XPATH, "//input[@placeholder='Email Address']")
     password_input = driver.find_element(By.XPATH, "//input[@placeholder='Password']")
     submit_button = driver.find_element(By.XPATH, "//button[contains(text(), 'Log in')]")
